@@ -1,0 +1,62 @@
+[
+  {
+    "id": "n001",
+    "titulo": "OpenAI lança GPT-5 com raciocínio multimodal avançado",
+    "categoria": "IA",
+    "resumo": "O GPT-5 foi anunciado com capacidade de raciocínio encadeado sobre imagens, áudio e texto simultaneamente. A empresa afirma redução de 40% em alucinações em benchmarks internos.",
+    "fonte": "The Verge",
+    "link": "https://theverge.com/gpt5",
+    "publicada_em": "2025-06-20",
+    "tags": ["IA", "OpenAI", "LLM", "GPT"]
+  },
+  {
+    "id": "n002",
+    "titulo": "Kubernetes 1.31 chega com melhorias em autoscaling e segurança de pods",
+    "categoria": "DevOps",
+    "resumo": "A nova versão do Kubernetes traz Horizontal Pod Autoscaler com suporte nativo a métricas customizadas e reforço de políticas de rede por namespace.",
+    "fonte": "Kubernetes Blog",
+    "link": "https://kubernetes.io/blog/1-31",
+    "publicada_em": "2025-06-18",
+    "tags": ["Kubernetes", "DevOps", "Cloud", "Containers"]
+  },
+  {
+    "id": "n003",
+    "titulo": "Brasil sobe para 8º lugar no ranking global de desenvolvedoras mulheres",
+    "categoria": "Diversidade",
+    "resumo": "Relatório da HackerRank aponta crescimento de 23% no número de desenvolvedoras brasileiras no último ano, impulsionado por programas de formação gratuita.",
+    "fonte": "HackerRank",
+    "link": "https://hackerrank.com/report-2025",
+    "publicada_em": "2025-06-19",
+    "tags": ["Diversidade", "Mulheres em Tech", "Brasil", "Carreira"]
+  },
+  {
+    "id": "n004",
+    "titulo": "Falha crítica no NPM afeta 12 mil pacotes open source",
+    "categoria": "Segurança",
+    "resumo": "Pesquisadores identificaram uma vulnerabilidade de injeção de dependência que permite execução remota de código. Atualização obrigatória para versões acima de 9.x.",
+    "fonte": "Bleeping Computer",
+    "link": "https://bleepingcomputer.com/npm-vuln",
+    "publicada_em": "2025-06-20",
+    "tags": ["Segurança", "NPM", "JavaScript", "Vulnerabilidade"]
+  },
+  {
+    "id": "n005",
+    "titulo": "Figma anuncia modo de codificação automática com suporte a React e Vue",
+    "categoria": "Design",
+    "resumo": "O Figma Dev Mode agora gera código React e Vue diretamente dos componentes, incluindo variáveis de design como tokens CSS. Disponível para planos Professional e acima.",
+    "fonte": "Figma Blog",
+    "link": "https://figma.com/blog/dev-mode-code",
+    "publicada_em": "2025-06-17",
+    "tags": ["Design", "Figma", "React", "CSS", "UX"]
+  },
+  {
+    "id": "n006",
+    "titulo": "Estudo aponta que 67% das empresas brasileiras vão contratar em IA até 2026",
+    "categoria": "Mercado",
+    "resumo": "Pesquisa do Instituto Brasileiro de IA com 400 empresas mostra demanda crescente por perfis de prompt engineering, MLOps e dados com foco em negócios.",
+    "fonte": "IBAI",
+    "link": "https://ibai.org.br/pesquisa-2025",
+    "publicada_em": "2025-06-15",
+    "tags": ["Mercado", "IA", "Emprego", "Brasil", "Carreira"]
+  }
+]
