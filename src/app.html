@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radia — Assistente da Radia Tech</title>
+<style>
+  /* ============================================================
+     TOKENS DE DESIGN — Radia Tech
+     Paleta: roxo profundo + magenta + off-white + cinza escuro
+  ============================================================ */
+  :root {
+    --cor-fundo: #0d0b12;
+    --cor-painel: #13101c;
+    --cor-painel-borda: #2a2040;
+    --cor-primaria: #c026d3;       /* magenta */
+    --cor-primaria-hover: #a21bbf;
+    --cor-acento: #7c3aed;         /* roxo */
+    --cor-acento-suave: #1e1535;
+    --cor-texto: #f0edf8;
+    --cor-texto-suave: #9b8ab8;
+    --cor-bubble-radi: #1e1535;
+    --cor-bubble-user: #2a1f45;
+    --cor-input-fundo: #1a1528;
+    --cor-input-borda: #3d2f6a;
+    --cor-card: #19152a;
+    --cor-card-borda: #32275a;
+    --cor-tag: #2d1f55;
+    --cor-tag-texto: #c4aaff;
+    --cor-badge-ia: #c026d3;
+    --radius-painel: 20px;
+    --radius-bubble: 16px;
+    --radius-card: 12px;
+    --radius-input: 12px;
+    --sombra-painel: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(192,38,211,0.15);
+    --sombra-botao: 0 4px 24px rgba(192,38,211,0.4);
+    --fonte-ui: 'Inter', system-ui, sans-serif;
+    --painel-largura: 420px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--fonte-ui);
+    background: var(--cor-fundo);
+    color: var(--cor-texto);
+    min-height: 100vh;
+    /* Simula uma página da Radia Tech no fundo */
+    background-image:
+      radial-gradient(ellipse 60% 50% at 20% 30%, rgba(124,58,237,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 80% 70%, rgba(192,38,211,0.06) 0%, transparent 60%);
+  }
+
+  /* ============================================================
+     PÁGINA DEMO (fundo simulando a plataforma)
+  ============================================================ */
+  .pagina-demo {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 32px;
+  }
+
+  .logo-radia {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 48px;
+  }
+
+  .logo-radia svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .logo-radia span {
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #c026d3, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .demo-titulo {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--cor-primaria);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .demo-headline {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+    color: var(--cor-texto);
+  }
+
+  .demo-sub {
+    font-size: 16px;
+    color: var(--cor-texto-suave);
+    line-height: 1.6;
+    max-width: 560px;
+    margin-bottom: 48px;
+  }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .demo-card {
+    background: var(--cor-card);
+    border: 1px solid var(--cor-card-borda);
+    border-radius: var(--radius-card);
+    padding: 20px;
+  }
+
+  .demo-card-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cor-tag-texto);
+    background: var(--cor-tag);
+    padding: 3px 8px;
+    border-radius: 6px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .demo-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cor-texto);
+    line-height: 1.4;
+  }
+
+  .demo-card p {
+    font-size: 13px;
+    color: var(--cor-texto-suave);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* ============================================================
+     BOTÃO FLUTUANTE DA RADI
+  ============================================================ */
+  #btn-radi {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c026d3, #7c3aed);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--sombra-botao);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 999;
+    outline: none;
+  }
+
+  #btn-radi:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 32px rgba(192,38,211,0.6);
+  }
+
+  #btn-radi:active {
+    transform: scale(0.96);
+  }
+
+  /* Avatar da Radia no botão */
+  #btn-radi .radi-avatar-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  /* Badge de notificação */
+  #btn-radi .badge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    background: #22c55e;
+    border-radius: 50%;
+    border: 2px solid var(--cor-fundo);
+  }
+
+  /* Tooltip do botão */
+  #btn-radi::before {
+    content: 'Falar com a Radia';
+    position: absolute;
+    right: 72px;
+    background: var(--cor-painel);
+    color: var(--cor-texto);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--cor-painel-borda);
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  #btn-radi:hover::before {
+    opacity: 1;
+  }
+
+  /* ============================================================
+     PAINEL LATERAL DE CHAT
+  ============================================================ */
+  #painel-radi {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: var(--painel-largura);
+    height: 100vh;
+    background: var(--cor-painel);
+    border-left: 1px solid var(--cor-painel-borda);
+    box-shadow: var(--sombra-painel);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  #painel-radi.aberto {
+    transform: translateX(0);
+  }
+
+  /* Cabeçalho do painel */
+  .painel-header {
+    padding: 20px 20px 16px;
+    border-bottom: 1px solid var(--cor-painel-borda);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    background: linear-gradient(180deg, rgba(124,58,237,0.08) 0%, transparent 100%);
+  }
+
+  .radi-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c026d3, #7c3aed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .painel-header-info {
+    flex: 1;
+  }
+
+  .painel-header-info h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--cor-texto);
+  }
+
+  .status-radi {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: #22c55e;
+    margin-top: 2px;
+  }
+
+  .status-radi::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .btn-fechar {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--cor-texto-suave);
+    transition: background 0.15s ease, color 0.15s ease;
+    font-size: 18px;
+  }
+
+  .btn-fechar:hover {
+    background: rgba(255,255,255,0.06);
+    color: var(--cor-texto);
+  }
+
+  /* Área de mensagens */
+  #area-mensagens {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    scroll-behavior: smooth;
+  }
+
+  #area-mensagens::-webkit-scrollbar { width: 4px; }
+  #area-mensagens::-webkit-scrollbar-track { background: transparent; }
+  #area-mensagens::-webkit-scrollbar-thumb { background: var(--cor-painel-borda); border-radius: 4px; }
+
+  /* Bubbles de mensagem */
+  .msg {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 88%;
+    animation: msg-entra 0.25s ease;
+  }
+
+  @keyframes msg-entra {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg.radi { align-self: flex-start; }
+  .msg.usuario { align-self: flex-end; }
+
+  .msg-remetente {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--cor-texto-suave);
+    padding: 0 4px;
+  }
+
+  .msg.radi .msg-remetente { color: var(--cor-primaria); }
+
+  .msg-bubble {
+    padding: 12px 14px;
+    border-radius: var(--radius-bubble);
+    font-size: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .msg.radi .msg-bubble {
+    background: var(--cor-bubble-radi);
+    border: 1px solid var(--cor-painel-borda);
+    border-bottom-left-radius: 4px;
+    color: var(--cor-texto);
+  }
+
+  .msg.usuario .msg-bubble {
+    background: var(--cor-bubble-user);
+    border: 1px solid rgba(124,58,237,0.3);
+    border-bottom-right-radius: 4px;
+    color: var(--cor-texto);
+  }
+
+  /* Cards inline de resultado */
+  .card-resultado {
+    background: var(--cor-card);
+    border: 1px solid var(--cor-card-borda);
+    border-radius: var(--radius-card);
+    padding: 12px 14px;
+    margin-top: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    display: block;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    cursor: pointer;
+  }
+
+  .card-resultado:hover {
+    border-color: var(--cor-primaria);
+    background: rgba(192,38,211,0.06);
+  }
+
+  .card-resultado-tipo {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--cor-tag-texto);
+    background: var(--cor-tag);
+    padding: 2px 7px;
+    border-radius: 5px;
+    display: inline-block;
+    margin-bottom: 6px;
+  }
+
+  .card-resultado-titulo {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--cor-texto);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .card-resultado-meta {
+    font-size: 12px;
+    color: var(--cor-texto-suave);
+    line-height: 1.4;
+  }
+
+  .card-resultado-link {
+    font-size: 11px;
+    color: var(--cor-primaria);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* Typing indicator */
+  .msg-typing .msg-bubble {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 14px;
+  }
+
+  .typing-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--cor-texto-suave);
+    border-radius: 50%;
+    animation: typing-bounce 1.2s ease infinite;
+  }
+
+  .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+  .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes typing-bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+    40% { transform: translateY(-5px); opacity: 1; }
+  }
+
+  /* Chips de sugestão rápida */
+  .chips-sugestao {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .chip {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 1px solid var(--cor-painel-borda);
+    background: var(--cor-acento-suave);
+    color: var(--cor-tag-texto);
+    cursor: pointer;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+
+  .chip:hover {
+    border-color: var(--cor-primaria);
+    background: rgba(192,38,211,0.1);
+    color: var(--cor-texto);
+  }
+
+  /* Área de input */
+  .painel-footer {
+    padding: 14px 16px 20px;
+    border-top: 1px solid var(--cor-painel-borda);
+    flex-shrink: 0;
+    background: var(--cor-painel);
+  }
+
+  .config-api {
+    margin-bottom: 10px;
+  }
+
+  .config-api input {
+    width: 100%;
+    padding: 7px 12px;
+    background: var(--cor-input-fundo);
+    border: 1px solid var(--cor-input-borda);
+    border-radius: 8px;
+    color: var(--cor-texto-suave);
+    font-size: 12px;
+    font-family: monospace;
+    outline: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .config-api input:focus {
+    border-color: var(--cor-acento);
+    color: var(--cor-texto);
+  }
+
+  .config-api input::placeholder { color: rgba(155,138,184,0.5); }
+
+  .input-wrapper {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+  }
+
+  #input-msg {
+    flex: 1;
+    padding: 10px 14px;
+    background: var(--cor-input-fundo);
+    border: 1px solid var(--cor-input-borda);
+    border-radius: var(--radius-input);
+    color: var(--cor-texto);
+    font-size: 14px;
+    font-family: var(--fonte-ui);
+    resize: none;
+    outline: none;
+    min-height: 44px;
+    max-height: 120px;
+    line-height: 1.5;
+    transition: border-color 0.15s ease;
+  }
+
+  #input-msg:focus { border-color: var(--cor-acento); }
+  #input-msg::placeholder { color: rgba(155,138,184,0.5); }
+
+  #btn-enviar {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #c026d3, #7c3aed);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    outline: none;
+  }
+
+  #btn-enviar:hover { opacity: 0.88; transform: scale(1.04); }
+  #btn-enviar:active { transform: scale(0.96); }
+  #btn-enviar:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  #btn-enviar svg { color: white; }
+
+  .rodape-aviso {
+    font-size: 11px;
+    color: var(--cor-texto-suave);
+    text-align: center;
+    margin-top: 10px;
+    opacity: 0.6;
+  }
+
+  /* ============================================================
+     RESPONSIVO
+  ============================================================ */
+  @media (max-width: 480px) {
+    #painel-radi {
+      width: 100%;
+      border-left: none;
+      border-radius: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     PÁGINA DEMO — simula a plataforma Radia Tech
+============================================================ -->
+<div class="pagina-demo">
+  <div class="logo-radia">
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="14" fill="url(#logoGrad)"/>
+      <path d="M10 22V10h7c2.8 0 4.5 1.5 4.5 4s-1.7 4-4.5 4H14l7 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <defs>
+        <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+          <stop offset="0%" stop-color="#c026d3"/>
+          <stop offset="100%" stop-color="#7c3aed"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    <span>Radia Tech</span>
+  </div>
+
+  <p class="demo-titulo">Curadoria para mulheres em tech</p>
+  <h1 class="demo-headline">O que importa pra você,<br>na hora que você precisa.</h1>
+  <p class="demo-sub">Notícias, vagas e eventos em tecnologia, curados para mulheres. Nomeada em homenagem a Radia Perlman, inventora do protocolo STP.</p>
+
+  <div class="demo-grid">
+    <div class="demo-card">
+      <span class="demo-card-tag">IA</span>
+      <h3>OpenAI lança GPT-5 com raciocínio multimodal avançado</h3>
+      <p>40% menos alucinações em benchmarks internos. The Verge · 20/06</p>
+    </div>
+    <div class="demo-card">
+      <span class="demo-card-tag">Segurança</span>
+      <h3>Falha crítica no NPM afeta 12 mil pacotes open source</h3>
+      <p>Atualização obrigatória para versões acima de 9.x. Bleeping Computer · 20/06</p>
+    </div>
+    <div class="demo-card">
+      <span class="demo-card-tag">Design</span>
+      <h3>Figma anuncia modo de codificação automática com React e Vue</h3>
+      <p>Tokens CSS direto dos componentes. Figma Blog · 17/06</p>
+    </div>
+    <div class="demo-card">
+      <span class="demo-card-tag">Diversidade</span>
+      <h3>Brasil sobe para 8º lugar no ranking de desenvolvedoras mulheres</h3>
+      <p>Crescimento de 23% no último ano. HackerRank · 19/06</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     BOTÃO FLUTUANTE DA RADI
+============================================================ -->
+<button id="btn-radi" aria-label="Abrir chat com a Radia" title="Falar com a Radia">
+  <div class="radi-avatar-btn">✦</div>
+  <div class="badge"></div>
+</button>
+
+<!-- ============================================================
+     PAINEL LATERAL DE CHAT
+============================================================ -->
+<div id="painel-radi" role="dialog" aria-label="Chat com a Radia" aria-modal="true">
+
+  <div class="painel-header">
+    <div class="radi-avatar" aria-hidden="true">✦</div>
+    <div class="painel-header-info">
+      <h2>Radia</h2>
+      <div class="status-radi">Assistente da Radia Tech</div>
+    </div>
+    <button class="btn-fechar" id="btn-fechar" aria-label="Fechar chat">✕</button>
+  </div>
+
+  <div id="area-mensagens" aria-live="polite" aria-label="Conversa com a Radia">
+    <!-- Mensagens aparecem aqui -->
+  </div>
+
+  <div class="painel-footer">
+    <div class="config-api">
+      <input
+        type="password"
+        id="input-api-key"
+        placeholder="Cole sua API Key da OpenAI para ativar a Radia"
+        autocomplete="off"
+        aria-label="API Key da OpenAI"
+      />
+    </div>
+    <div class="input-wrapper">
+      <textarea
+        id="input-msg"
+        placeholder="Pergunte pra Radia sobre vagas, notícias ou eventos..."
+        rows="1"
+        aria-label="Mensagem para a Radia"
+      ></textarea>
+      <button id="btn-enviar" aria-label="Enviar mensagem" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <p class="rodape-aviso">Radia responde com base no conteúdo da Radia Tech. Não inventa dados.</p>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // BASE DE CONHECIMENTO — injetada no contexto da Radia
+  // Em produção: consultada via RAG no banco da Radia Tech
+  // ============================================================
+  const BASE_VAGAS = [
+    { id:"v001", titulo:"UX Designer Pleno", empresa:"Nubank", local:"Remoto", nivel:"Pleno", area:"UX/Design", stack:["Figma","Research","Prototipagem"], salario:"R$ 8.000 – R$ 11.000", link:"https://nubank.com.br/vagas/ux-pleno", publicada_em:"2025-06-19" },
+    { id:"v002", titulo:"Engenheira de Machine Learning", empresa:"iFood", local:"São Paulo, SP (Híbrido)", nivel:"Sênior", area:"Dados/IA", stack:["Python","PyTorch","MLflow","Spark"], salario:"R$ 18.000 – R$ 24.000", link:"https://ifood.com.br/vagas/ml-senior", publicada_em:"2025-06-18" },
+    { id:"v003", titulo:"Desenvolvedora Front-End", empresa:"Creditas", local:"Remoto", nivel:"Pleno", area:"Desenvolvimento", stack:["React","TypeScript","CSS-in-JS"], salario:"R$ 9.000 – R$ 13.000", link:"https://creditas.com/vagas/frontend-pleno", publicada_em:"2025-06-20" },
+    { id:"v004", titulo:"Product Manager – Fintech", empresa:"Mercado Pago", local:"Buenos Aires / Remoto", nivel:"Sênior", area:"Produto", stack:["Roadmap","OKR","SQL","Mixpanel"], salario:"USD 5.000 – USD 7.000", link:"https://mercadopago.jobs/pm-fintech", publicada_em:"2025-06-17" },
+    { id:"v005", titulo:"Analista de Segurança da Informação", empresa:"TOTVS", local:"São Paulo, SP", nivel:"Júnior", area:"Segurança", stack:["SIEM","ISO 27001","Pentest básico"], salario:"R$ 4.500 – R$ 6.000", link:"https://totvs.com/vagas/seguranca-jr", publicada_em:"2025-06-20" },
+    { id:"v006", titulo:"Engenheira de Dados", empresa:"PicPay", local:"Remoto", nivel:"Pleno", area:"Dados/IA", stack:["Python","dbt","BigQuery","Airflow"], salario:"R$ 12.000 – R$ 16.000", link:"https://picpay.com/vagas/data-engineer", publicada_em:"2025-06-16" }
+  ];
+
+  const BASE_NOTICIAS = [
+    { id:"n001", titulo:"OpenAI lança GPT-5 com raciocínio multimodal avançado", categoria:"IA", resumo:"GPT-5 foi anunciado com multimodalidade avançada e redução de 40% em alucinações em benchmarks internos.", fonte:"The Verge", link:"https://theverge.com/gpt5", publicada_em:"2025-06-20", tags:["IA","OpenAI","LLM","GPT"] },
+    { id:"n002", titulo:"Kubernetes 1.31 chega com melhorias em autoscaling e segurança de pods", categoria:"DevOps", resumo:"Nova versão traz HPA com suporte a métricas customizadas e reforço de políticas de rede por namespace.", fonte:"Kubernetes Blog", link:"https://kubernetes.io/blog/1-31", publicada_em:"2025-06-18", tags:["Kubernetes","DevOps","Cloud","Containers"] },
+    { id:"n003", titulo:"Brasil sobe para 8º lugar no ranking global de desenvolvedoras mulheres", categoria:"Diversidade", resumo:"Crescimento de 23% no número de desenvolvedoras brasileiras, impulsionado por programas de formação gratuita.", fonte:"HackerRank", link:"https://hackerrank.com/report-2025", publicada_em:"2025-06-19", tags:["Diversidade","Mulheres em Tech","Brasil","Carreira"] },
+    { id:"n004", titulo:"Falha crítica no NPM afeta 12 mil pacotes open source", categoria:"Segurança", resumo:"Vulnerabilidade de injeção de dependência permite execução remota de código. Atualização obrigatória para versões acima de 9.x.", fonte:"Bleeping Computer", link:"https://bleepingcomputer.com/npm-vuln", publicada_em:"2025-06-20", tags:["Segurança","NPM","JavaScript","Vulnerabilidade"] },
+    { id:"n005", titulo:"Figma anuncia modo de codificação automática com suporte a React e Vue", categoria:"Design", resumo:"Dev Mode agora gera código React e Vue com variáveis de design como tokens CSS.", fonte:"Figma Blog", link:"https://figma.com/blog/dev-mode-code", publicada_em:"2025-06-17", tags:["Design","Figma","React","CSS","UX"] },
+    { id:"n006", titulo:"67% das empresas brasileiras vão contratar em IA até 2026", categoria:"Mercado", resumo:"Demanda crescente por perfis de prompt engineering, MLOps e dados com foco em negócios.", fonte:"IBAI", link:"https://ibai.org.br/pesquisa-2025", publicada_em:"2025-06-15", tags:["Mercado","IA","Emprego","Brasil","Carreira"] }
+  ];
+
+  const BASE_EVENTOS = [
+    { id:"e001", nome:"PythonBR 2025", tipo:"Conferência", area:"Desenvolvimento", cidade:"Curitiba", estado:"PR", formato:"Presencial", data_inicio:"2025-07-12", data_fim:"2025-07-13", link:"https://pythonbr.org", gratuito:false, preco:"R$ 120" },
+    { id:"e002", nome:"Women in Tech Summit", tipo:"Summit", area:"Diversidade", cidade:"Online", estado:null, formato:"Online", data_inicio:"2025-07-05", data_fim:"2025-07-05", link:"https://womenintech.com.br/summit", gratuito:true, preco:null },
+    { id:"e003", nome:"AWS Community Day Paraná", tipo:"Community Day", area:"Cloud", cidade:"Curitiba", estado:"PR", formato:"Presencial", data_inicio:"2025-07-19", data_fim:"2025-07-19", link:"https://awscommunityday.com.br/parana", gratuito:true, preco:null },
+    { id:"e004", nome:"UX Conf Brasil", tipo:"Conferência", area:"UX/Design", cidade:"São Paulo", estado:"SP", formato:"Presencial", data_inicio:"2025-08-02", data_fim:"2025-08-03", link:"https://uxconf.com.br", gratuito:false, preco:"R$ 290" },
+    { id:"e005", nome:"Meetup Segurança Ofensiva — OWASP Curitiba", tipo:"Meetup", area:"Segurança", cidade:"Curitiba", estado:"PR", formato:"Presencial", data_inicio:"2025-07-08", data_fim:"2025-07-08", link:"https://owasp.org/curitiba", gratuito:true, preco:null },
+    { id:"e006", nome:"Semana de IA Generativa — DIO", tipo:"Workshop Online", area:"IA", cidade:"Online", estado:null, formato:"Online", data_inicio:"2025-07-21", data_fim:"2025-07-25", link:"https://dio.me/semana-ia-generativa", gratuito:true, preco:null }
+  ];
+
+  // ============================================================
+  // SYSTEM PROMPT — instruções da Radia + base de conhecimento
+  // ============================================================
+  function montarSystemPrompt() {
+    return `Você é a Radia, assistente inteligente da Radia Tech — uma plataforma feminista de curadoria de notícias, vagas e eventos em tecnologia, nomeada em homenagem a Radia Perlman.
+
+QUEM VOCÊ É:
+Você é uma curadora especialista no conteúdo da Radia Tech. Sua função é ajudar a usuária a encontrar o que importa para ela — vagas, notícias e eventos. Você fala como uma amiga de tech: direta, acolhedora, sem enrolação e sem condescendência. Use PT-BR informal.
+
+REGRAS ABSOLUTAS (nunca viole):
+1. Só responda com base nos dados fornecidos abaixo. Nunca invente vagas, notícias, eventos, salários, datas ou links.
+2. Se não encontrar o que foi pedido, diga claramente: "Não encontrei isso na plataforma agora."
+3. Não dê conselhos genéricos de carreira. Guie pelo conteúdo da Radia Tech.
+4. Se perguntada sobre algo fora do seu escopo, responda brevemente e redirecione: "Posso te mostrar vagas ou notícias sobre isso na plataforma?"
+5. Nunca invente links. Use apenas os links presentes nos dados abaixo.
+6. Nunca ranqueie ou compare empregadores — só mostre os dados disponíveis.
+
+FORMATO DE RESPOSTA:
+- Seja curta e objetiva. Prefira 3-5 linhas por resposta.
+- Ao listar vagas, use este formato:
+  💼 [titulo] — [empresa]
+  📍 [local] | 💰 [salario]
+  🛠 [stack separada por vírgulas]
+  🔗 [link]
+- Ao listar notícias, use:
+  📰 [titulo]
+  → [resumo em 1 linha]
+  Fonte: [fonte] — [link]
+- Ao listar eventos, use:
+  📅 [nome]
+  📍 [cidade] — [formato]
+  🗓 [data_inicio] | [gratuito ? "Gratuito" : preco]
+  🔗 [link]
+- Ao final, sempre ofereça uma próxima ação relacionada.
+
+BASE DE CONHECIMENTO ATUAL DA RADIA TECH:
+
+VAGAS DISPONÍVEIS:
+${JSON.stringify(BASE_VAGAS, null, 2)}
+
+NOTÍCIAS RECENTES:
+${JSON.stringify(BASE_NOTICIAS, null, 2)}
+
+EVENTOS PRÓXIMOS:
+${JSON.stringify(BASE_EVENTOS, null, 2)}`;
+  }
+
+  // ============================================================
+  // ESTADO DA APLICAÇÃO
+  // ============================================================
+  let historico = []; // { role: 'user'|'assistant', content: string }
+  let enviando = false;
+
+  // ============================================================
+  // ELEMENTOS DO DOM
+  // ============================================================
+  const painelRadi    = document.getElementById('painel-radi');
+  const btnRadi       = document.getElementById('btn-radi');
+  const btnFechar     = document.getElementById('btn-fechar');
+  const areaMensagens = document.getElementById('area-mensagens');
+  const inputMsg      = document.getElementById('input-msg');
+  const btnEnviar     = document.getElementById('btn-enviar');
+  const inputApiKey   = document.getElementById('input-api-key');
+
+  // ============================================================
+  // CONTROLE DO PAINEL
+  // ============================================================
+  btnRadi.addEventListener('click', () => {
+    painelRadi.classList.add('aberto');
+    btnRadi.style.display = 'none';
+    if (areaMensagens.children.length === 0) iniciarConversa();
+    setTimeout(() => inputMsg.focus(), 350);
+  });
+
+  btnFechar.addEventListener('click', () => {
+    painelRadi.classList.remove('aberto');
+    btnRadi.style.display = 'flex';
+  });
+
+  // Fecha ao apertar ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && painelRadi.classList.contains('aberto')) {
+      btnFechar.click();
+    }
+  });
+
+  // ============================================================
+  // HABILITAR/DESABILITAR ENVIO
+  // ============================================================
+  function atualizarBotaoEnviar() {
+    const temKey  = inputApiKey.value.trim().length > 10;
+    const temMsg  = inputMsg.value.trim().length > 0;
+    btnEnviar.disabled = !temKey || !temMsg || enviando;
+  }
+
+  inputApiKey.addEventListener('input', atualizarBotaoEnviar);
+  inputMsg.addEventListener('input', () => {
+    // Auto-resize do textarea
+    inputMsg.style.height = 'auto';
+    inputMsg.style.height = Math.min(inputMsg.scrollHeight, 120) + 'px';
+    atualizarBotaoEnviar();
+  });
+
+  // Enter envia, Shift+Enter quebra linha
+  inputMsg.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      if (!btnEnviar.disabled) enviarMensagem();
+    }
+  });
+
+  btnEnviar.addEventListener('click', enviarMensagem);
+
+  // ============================================================
+  // RENDERIZAÇÃO DE MENSAGENS
+  // ============================================================
+  function adicionarMensagem(papel, texto) {
+    const wrapper = document.createElement('div');
+    wrapper.className = `msg ${papel}`;
+
+    const remetente = document.createElement('div');
+    remetente.className = 'msg-remetente';
+    remetente.textContent = papel === 'radi' ? 'Radia' : 'Você';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'msg-bubble';
+    bubble.textContent = texto;
+
+    wrapper.appendChild(remetente);
+    wrapper.appendChild(bubble);
+    areaMensagens.appendChild(wrapper);
+    rolarParaBaixo();
+    return bubble;
+  }
+
+  function adicionarTyping() {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'msg radi msg-typing';
+    wrapper.id = 'typing-indicator';
+
+    const bubble = document.createElement('div');
+    bubble.className = 'msg-bubble';
+    bubble.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+
+    wrapper.appendChild(bubble);
+    areaMensagens.appendChild(wrapper);
+    rolarParaBaixo();
+  }
+
+  function removerTyping() {
+    const el = document.getElementById('typing-indicator');
+    if (el) el.remove();
+  }
+
+  function adicionarChips(sugestoes) {
+    // Adiciona chips de sugestão rápida após a mensagem de boas-vindas
+    const ultima = areaMensagens.lastElementChild;
+    if (!ultima) return;
+
+    const chips = document.createElement('div');
+    chips.className = 'chips-sugestao';
+
+    sugestoes.forEach(texto => {
+      const chip = document.createElement('button');
+      chip.className = 'chip';
+      chip.textContent = texto;
+      chip.addEventListener('click', () => {
+        inputMsg.value = texto;
+        atualizarBotaoEnviar();
+        inputMsg.focus();
+      });
+      chips.appendChild(chip);
+    });
+
+    ultima.appendChild(chips);
+  }
+
+  function rolarParaBaixo() {
+    areaMensagens.scrollTop = areaMensagens.scrollHeight;
+  }
+
+  // ============================================================
+  // MENSAGEM DE BOAS-VINDAS
+  // ============================================================
+  function iniciarConversa() {
+    adicionarMensagem('radi',
+      'Oi! Sou a Radia, curadora da Radia Tech 💜\n\nPosso te ajudar com vagas, notícias ou eventos em tech. O que você precisa?'
+    );
+
+    adicionarChips([
+      'Vagas remotas de UX',
+      'Notícias de IA',
+      'Eventos em Curitiba',
+      'Vagas de dados'
+    ]);
+  }
+
+  // ============================================================
+  // ENVIO E COMUNICAÇÃO COM A API
+  // ============================================================
+  async function enviarMensagem() {
+    const apiKey = inputApiKey.value.trim();
+    const texto  = inputMsg.value.trim();
+
+    if (!apiKey || !texto || enviando) return;
+
+    // Adiciona mensagem do usuário
+    adicionarMensagem('usuario', texto);
+    historico.push({ role: 'user', content: texto });
+
+    // Limpa input
+    inputMsg.value = '';
+    inputMsg.style.height = 'auto';
+    atualizarBotaoEnviar();
+
+    // Ativa estado de carregamento
+    enviando = true;
+    btnEnviar.disabled = true;
+    adicionarTyping();
+
+    try {
+      // Monta histórico no formato OpenAI: system prompt como primeira mensagem
+      const mensagensOpenAI = [
+        { role: 'system', content: montarSystemPrompt() },
+        ...historico
+      ];
+
+      const resposta = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          max_tokens: 1024,
+          messages: mensagensOpenAI
+        })
+      });
+
+      if (!resposta.ok) {
+        const erro = await resposta.json().catch(() => ({}));
+        throw new Error(erro.error?.message || `Erro HTTP ${resposta.status}`);
+      }
+
+      const dados = await resposta.json();
+      const textoResposta = dados.choices?.[0]?.message?.content || '';
+
+      removerTyping();
+      adicionarMensagem('radi', textoResposta);
+      historico.push({ role: 'assistant', content: textoResposta });
+
+    } catch (erro) {
+      removerTyping();
+
+      // Trata erros comuns de forma amigável
+      let mensagemErro = 'Erro ao conectar com a API.';
+      if (erro.message.includes('401') || erro.message.includes('invalid_api_key')) {
+        mensagemErro = 'API Key inválida. Verifique e tente de novo.';
+      } else if (erro.message.includes('429')) {
+        mensagemErro = 'Muitas requisições. Aguarda um momento e tenta de novo.';
+      } else if (erro.message.includes('Failed to fetch')) {
+        mensagemErro = 'Sem conexão. Verifique sua internet.';
+      }
+
+      adicionarMensagem('radi', mensagemErro);
+      // Não adiciona ao histórico para não contaminar o contexto
+    } finally {
+      enviando = false;
+      atualizarBotaoEnviar();
+      inputMsg.focus();
+    }
+  }
+</script>
+</body>
+</html>
