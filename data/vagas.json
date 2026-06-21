@@ -1,0 +1,74 @@
+[
+  {
+    "id": "v001",
+    "titulo": "UX Designer Pleno",
+    "empresa": "Nubank",
+    "local": "Remoto",
+    "nivel": "Pleno",
+    "area": "UX/Design",
+    "stack": ["Figma", "Research", "Prototipagem"],
+    "salario": "R$ 8.000 – R$ 11.000",
+    "link": "https://nubank.com.br/vagas/ux-pleno",
+    "publicada_em": "2025-06-19"
+  },
+  {
+    "id": "v002",
+    "titulo": "Engenheira de Machine Learning",
+    "empresa": "iFood",
+    "local": "São Paulo, SP (Híbrido)",
+    "nivel": "Sênior",
+    "area": "Dados/IA",
+    "stack": ["Python", "PyTorch", "MLflow", "Spark"],
+    "salario": "R$ 18.000 – R$ 24.000",
+    "link": "https://ifood.com.br/vagas/ml-senior",
+    "publicada_em": "2025-06-18"
+  },
+  {
+    "id": "v003",
+    "titulo": "Desenvolvedora Front-End",
+    "empresa": "Creditas",
+    "local": "Remoto",
+    "nivel": "Pleno",
+    "area": "Desenvolvimento",
+    "stack": ["React", "TypeScript", "CSS-in-JS"],
+    "salario": "R$ 9.000 – R$ 13.000",
+    "link": "https://creditas.com/vagas/frontend-pleno",
+    "publicada_em": "2025-06-20"
+  },
+  {
+    "id": "v004",
+    "titulo": "Product Manager – Fintech",
+    "empresa": "Mercado Pago",
+    "local": "Buenos Aires / Remoto",
+    "nivel": "Sênior",
+    "area": "Produto",
+    "stack": ["Roadmap", "OKR", "SQL", "Mixpanel"],
+    "salario": "USD 5.000 – USD 7.000",
+    "link": "https://mercadopago.jobs/pm-fintech",
+    "publicada_em": "2025-06-17"
+  },
+  {
+    "id": "v005",
+    "titulo": "Analista de Segurança da Informação",
+    "empresa": "TOTVS",
+    "local": "São Paulo, SP",
+    "nivel": "Júnior",
+    "area": "Segurança",
+    "stack": ["SIEM", "ISO 27001", "Pentest básico"],
+    "salario": "R$ 4.500 – R$ 6.000",
+    "link": "https://totvs.com/vagas/seguranca-jr",
+    "publicada_em": "2025-06-20"
+  },
+  {
+    "id": "v006",
+    "titulo": "Engenheira de Dados",
+    "empresa": "PicPay",
+    "local": "Remoto",
+    "nivel": "Pleno",
+    "area": "Dados/IA",
+    "stack": ["Python", "dbt", "BigQuery", "Airflow"],
+    "salario": "R$ 12.000 – R$ 16.000",
+    "link": "https://picpay.com/vagas/data-engineer",
+    "publicada_em": "2025-06-16"
+  }
+]
